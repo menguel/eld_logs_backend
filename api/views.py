@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Trip, ELDlog
 from .serializers import TripSerializer, ELDLogsSerializer
 from .utils.hos_calculations import calculate_hos_compliance
+from .utils.route_calculations import generate_route_instructions
 from django.utils import timezone
 # Create your views here.
 
@@ -52,3 +53,13 @@ class TripViewset(viewsets.ModelViewSet):
         trip = self.get_object()
         report = calculate_hos_compliance(trip)
         return Response(report)
+    
+    @action(detail=True, methods=['get'])
+    def route_instructions(self, request, pk=None):
+        """
+        Renvoie les instructions d'itinéraire calculées à partir du Trip.
+        """
+
+        trip = self.get_object()
+        instruction = generate_route_instructions(trip)
+        return Response(instruction)

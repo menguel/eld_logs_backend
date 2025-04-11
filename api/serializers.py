@@ -23,6 +23,7 @@ class ELDLogsSerializer(serializers.ModelSerializer):
 class TripSerializer(serializers.ModelSerializer):
 
     driver = DriverSerializer(required=True)
+    
     class Meta:
         model = Trip
         fields = '__all__'
